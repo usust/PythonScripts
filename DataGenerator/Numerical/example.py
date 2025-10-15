@@ -1,4 +1,3 @@
-from integer import *
 from float import *
 
 if __name__ == "__main__":
