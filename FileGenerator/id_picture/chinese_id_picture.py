@@ -135,7 +135,7 @@ def generate_idcard(person:dict[str,str], out_dir:Path= Path("output")):
 
     filename = out_dir/f"{person['name']}.png"
     im.save(filename)
-    print(f"生成身份证图片 {filename} 完成")
+    # print(f"生成身份证图片 {filename} 完成")
 
 
 def load_person_csv(csv_path:Path)->list[dict[str,Any]]:
@@ -233,8 +233,12 @@ def _get_random_avatar_path(avatar_dir: str = "assets/avatar") -> str:
 
 if __name__ == '__main__':
     # load from person.csv
-    persons = load_person_csv(Path("person.csv"))
+    persons = load_person_csv(Path("user.csv"))
+    for person in persons:
+        person["avatar_path"] = _get_random_avatar_path()
+        person["auto_cut_bg"] = False
+    
     # or create a random person.csv
     # persons = create_person_csv(20, "person.csv")
-    with ThreadPoolExecutor(max_workers=4) as executor:
+    with ThreadPoolExecutor(max_workers=20) as executor:
         executor.map(generate_idcard, persons)
