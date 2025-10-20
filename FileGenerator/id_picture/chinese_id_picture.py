@@ -9,6 +9,7 @@ import cv2
 from PIL import Image as PImage, ImageFont, ImageDraw
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
+from typing import Any
 
 from DataGenerator.PersonInfo.name import *
 from DataGenerator.PersonInfo.id_card import *
@@ -77,7 +78,7 @@ def create_person_csv(person_count:int, csv_path:str)->list[dict[str,str]]:
     return rows
 
 
-def generate_idcard(person:dict[str,str], out_dir:Path|str= Path("output")):
+def generate_idcard(person:dict[str,str], out_dir:Path= Path("output")):
     """
     根据给定的人员信息，生成身份证样式的图片并保存到本地。
 
@@ -136,6 +137,36 @@ def generate_idcard(person:dict[str,str], out_dir:Path|str= Path("output")):
     im.save(filename)
     print(f"生成身份证图片 {filename} 完成")
 
+
+def load_person_csv(csv_path:Path)->list[dict[str,Any]]:
+    """
+    从指定 CSV 中读取人员信息，并将每一行转换为字典后组成列表返回。
+
+    参数:
+    - csv_path: CSV 文件路径。
+
+    返回:
+    - list[dict[str, Any]]: 读取到的人员信息列表，其中 `auto_cut_bg` 字段会被转换为布尔值。
+    """
+    csv_path = Path(csv_path)
+    persons: list[dict[str, Any]] = []
+    if not csv_path.exists():
+        raise FileNotFoundError(f"CSV 文件不存在: {csv_path}")
+
+    def _normalize_auto_cut(value: Any) -> bool:
+        if isinstance(value, bool):
+            return value
+        if value is None:
+            return False
+        return str(value).strip().lower() in {"1", "true", "yes", "y", "t"}
+
+    with open(csv_path, newline="", encoding="utf-8-sig") as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            normalized = dict(row)
+            normalized["auto_cut_bg"] = _normalize_auto_cut(normalized.get("auto_cut_bg"))
+            persons.append(normalized)
+    return persons
 
 def _change_background(img, img_back, zoom_size, center):
     """
@@ -201,6 +232,9 @@ def _get_random_avatar_path(avatar_dir: str = "assets/avatar") -> str:
 
 
 if __name__ == '__main__':
-    persons = create_person_csv(20, "person.csv")
+    # load from person.csv
+    persons = load_person_csv(Path("person.csv"))
+    # or create a random person.csv
+    # persons = create_person_csv(20, "person.csv")
     with ThreadPoolExecutor(max_workers=4) as executor:
         executor.map(generate_idcard, persons)
