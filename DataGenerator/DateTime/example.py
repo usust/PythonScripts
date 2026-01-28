@@ -1,4 +1,4 @@
-from date import *
+from DataGenerator.DateTime.date import generate_date_range
 
 if __name__ == "__main__":
     dates = generate_date_range("2020-03-01", "2020-03-10", date_format="%Y-%m-%d", quantity=20)

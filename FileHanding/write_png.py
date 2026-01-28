@@ -47,7 +47,7 @@ def embed_watermark_to_png(input_path: str | Path, output_path: str | Path, wate
 
     return dst_path
 
-from DataGenerator.Certificate.rsa_private import *
+from DataGenerator.Certificate.rsa_private import generate_rsa_private_key
 if __name__ == "__main__":
-    key = generate_private_keys(1, key_size=2048)[0].decode("utf-8")
+    key = generate_rsa_private_key(key_size=2048).decode("utf-8")
     embed_watermark_to_png(input_path="/Users/lyu/Code/GitHub/PythonScripts/1.png", output_path="/Users/lyu/Code/GitHub/PythonScripts/1_write.png", watermark_text=key)

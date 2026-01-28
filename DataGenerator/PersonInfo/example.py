@@ -11,9 +11,8 @@ from pathlib import Path
 # from 手机号 import *
 # from 身份证号 import *
 
-from DataGenerator.DateTime.date import generate_date_range
-from mobile_phone import *
-from name import *
+from DataGenerator.PersonInfo.mobile_phone import generate_mobile_phone
+from DataGenerator.PersonInfo.name import generate_unique_names
 
 save_dir = Path("/Users/lyu/Code/GitHub/PythonScripts/DataGenerator/PersonInfo/out")
 save_file_name = "phone.csv"

@@ -5,7 +5,7 @@ from typing import List, Optional
 
 from PIL import Image, ImageDraw, ImageFont
 
-from DataGenerator.Content.document import *
+from DataGenerator.Content.document import DocumentGeneratorConfig, generate_documents
 
 def generate_text_image(
     text: str,
@@ -105,6 +105,7 @@ def _measure_text(draw: ImageDraw.ImageDraw, text: str, font: ImageFont.FreeType
 
 
 if __name__ == "__main__":
-    cons = generate_document_content(generate_num=200)
+    config = DocumentGeneratorConfig(target_length=1000)
+    cons = generate_documents(config, count=200)
     for i, con in enumerate(cons):
         generate_text_image(con[300:800],  f"/Users/lyu/Code/GitHub/PythonScripts/out/{i+1}.png", font_path="../assets/fonts/青叶手写体.ttf", canvas_width=1600)

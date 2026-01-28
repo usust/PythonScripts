@@ -6,7 +6,7 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml.ns import qn
 from pathlib import Path
 
-from DataGenerator.Content.document import *
+from DataGenerator.Content.document import DocumentGeneratorConfig, generate_documents
 
 # 输入输出目录
 # 目录配置
@@ -69,9 +69,10 @@ def txt_to_docx(content:str, docx_path, filename):
 
 
 if __name__ == "__main__":
+    config = DocumentGeneratorConfig()
     for i in range(1688):
         make_docx(
-            generate_document_content(generate_num=1)[0],
+            generate_documents(config, count=1)[0],
             docx_dir="/Users/lyu/Code/GitHub/PythonScripts/tmp_out",
             filename=f"{i+1}.docx"
         )

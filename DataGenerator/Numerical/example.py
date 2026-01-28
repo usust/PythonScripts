@@ -1,4 +1,4 @@
-from float import *
+from DataGenerator.Numerical.float import generate_random_floats
 
 if __name__ == "__main__":
     # integers = generate_random_integers(20, 100, 110)
@@ -8,4 +8,3 @@ if __name__ == "__main__":
     floats = generate_random_floats(20, 100, 110, 2)
     for f in floats:
         print(f)
-

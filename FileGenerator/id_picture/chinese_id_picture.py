@@ -11,10 +11,13 @@ from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from typing import Any
 
-from DataGenerator.PersonInfo.name import *
-from DataGenerator.PersonInfo.id_card import *
-from DataGenerator.PersonInfo.address import *
-from DataGenerator.PersonInfo.nation import *
+from DataGenerator.PersonInfo import (
+    generate_unique_names,
+    generate_unique_id_numbers,
+    parse_birth_ymd_from_id,
+    generate_home_addresses,
+    generate_ethnic_sample,
+)
 
 # 获取 base_dir
 if getattr(sys, 'frozen', None):

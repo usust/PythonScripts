@@ -2,6 +2,32 @@
 
 常用的Python脚本合集，主要包含了数据生成模块。
 
+## 运行方式
+
+在项目的根目录下执行，以模块的形式执行。例如：
+
+```bash
+    python3 -m FileGenerator.id_picture.chinese_id_picture
+```
+
+## 安装依赖
+
+本项目已提供 `pyproject.toml`，建议使用可选依赖进行按需安装：
+
+```bash
+python3 -m pip install -e .           # 基础依赖
+python3 -m pip install -e '.[image]'  # 图像相关：numpy/opencv/Pillow
+python3 -m pip install -e '.[docx]'   # docx 相关：python-docx
+python3 -m pip install -e '.[pcap]'   # pcap 相关：scapy
+python3 -m pip install -e '.[crypto]' # 加密相关：cryptography
+python3 -m pip install -e '.[ocr]'    # OCR 相关：pytesseract
+python3 -m pip install -e '.[all]'    # 全部依赖
+```
+
+说明：
+- `pytesseract` 仅是 Python 封装，还需要系统里安装 `tesseract` 可执行文件。
+- 如果只使用部分功能，建议安装对应的可选依赖组。
+
 ## DataGenerator
 
 ### 证书信息

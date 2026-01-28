@@ -1,6 +1,6 @@
 from FileGenerator.pcap.save_pcap import save_packets_to_pcap
-from ssh_package import *
-from random_package import *
+from FileGenerator.pcap.ssh_package import simulate_ssh_file_transfer
+from FileGenerator.pcap.random_package import generate_random_tcp_packets
 
 # 占位私钥内容（严格禁止放真实密钥）
 placeholder_key = (
